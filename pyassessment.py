@@ -1,19 +1,22 @@
 import re
 from collections import Counter
 
-def count_specific_word(text, search_word):
-     
-    if not text or not search_word:
-         return 0
 
-    words = re.findall(r'\b\w+\b', text.lower())
+def count_specific_word(text, search_word):
+    """Count occurrences of a specified word in the text."""
+    if not text or not search_word:
+        return 0
+
+    words = re.findall(r"\b\w+\b", text.lower())
     return words.count(search_word.lower())
 
+
 def identify_most_common_word(text):
+    """Return the most common word in the text."""
     if not text:
         return None
 
-    words = re.findall(r'\b\w+\b', text.lower())
+    words = re.findall(r"\b\w+\b", text.lower())
 
     if not words:
         return None
@@ -21,12 +24,13 @@ def identify_most_common_word(text):
     word_counts = Counter(words)
     return word_counts.most_common(1)[0][0]
 
-def calculate_average_word_length(text):
 
+def calculate_average_word_length(text):
+    """Calculate the average length of words in the text."""
     if not text:
         return 0
 
-    words = re.findall(r'\b\w+\b', text)
+    words = re.findall(r"\b\w+\b", text)
 
     if not words:
         return 0
@@ -34,20 +38,22 @@ def calculate_average_word_length(text):
     total_length = sum(len(word) for word in words)
     return total_length / len(words)
 
-def count_paragraphs(text):
 
+def count_paragraphs(text):
+    """Count paragraphs separated by empty lines."""
     if not text:
         return 1
 
-    paragraphs = re.split(r'\n\s*\n', text.strip())
+    paragraphs = re.split(r"\n\s*\n", text.strip())
     return len(paragraphs)
 
-def count_sentences(text):
 
+def count_sentences(text):
+    """Count sentences ending with '.', '!' or '?'."""
     if not text:
         return 1
 
-    sentences = re.findall(r'[^.!?]+[.!?]', text)
+    sentences = re.findall(r"[^.!?]+[.!?]", text)
     return len(sentences)
 
 
@@ -93,21 +99,19 @@ The Apple Pie Master from ACME Inc. represents a significant advancement in the 
 
 
 search_word = "Apple"
+
 specific_word_count = count_specific_word(article_text, search_word)
-print(f"Number of times '{search_word}' appears: {specific_word_count}")
+print("Number of times '" + search_word + "' appears:", specific_word_count)
 
 most_common_word = identify_most_common_word(article_text)
-print(f"Most common word: {most_common_word}")
+print("Most common word:", most_common_word)
 
 average_word_length = calculate_average_word_length(article_text)
-print(f"Average word length: {average_word_length:.2f}")
+print("Average word length:", round(average_word_length, 2))
 
 paragraph_count = count_paragraphs(article_text)
-print(f"Number of paragraphs: {paragraph_count}")
+print("Number of paragraphs:", paragraph_count)
 
 sentence_count = count_sentences(article_text)
-print(f"Number of sentences: {sentence_count}")
-
-
-
+print("sentense: analisys", sentence_count)
 
