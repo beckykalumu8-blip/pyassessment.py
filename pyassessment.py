@@ -3,7 +3,7 @@ from collections import Counter
 
 
 def count_specific_word(text, search_word):
-    """Count occurrences of a specified word in the text."""
+    """Count occurrences of a specific word."""
     if not text or not search_word:
         return 0
 
@@ -12,7 +12,7 @@ def count_specific_word(text, search_word):
 
 
 def identify_most_common_word(text):
-    """Return the most common word in the text."""
+    """Find the most common word."""
     if not text:
         return None
 
@@ -26,7 +26,7 @@ def identify_most_common_word(text):
 
 
 def calculate_average_word_length(text):
-    """Calculate the average length of words in the text."""
+    """Calculate the average word length."""
     if not text:
         return 0
 
@@ -36,6 +36,7 @@ def calculate_average_word_length(text):
         return 0
 
     total_length = sum(len(word) for word in words)
+
     return total_length / len(words)
 
 
@@ -45,15 +46,17 @@ def count_paragraphs(text):
         return 1
 
     paragraphs = re.split(r"\n\s*\n", text.strip())
+
     return len(paragraphs)
 
 
 def count_sentences(text):
-    """Count sentences ending with '.', '!' or '?'."""
+    """Count sentences ending with ., !, or ?."""
     if not text:
         return 1
 
     sentences = re.findall(r"[^.!?]+[.!?]", text)
+
     return len(sentences)
 
 
@@ -98,20 +101,38 @@ The Apple Pie Master from ACME Inc. represents a significant advancement in the 
 """
 
 
-search_word = "Apple"
+def main():
+    search_word = "Apple"
 
-specific_word_count = count_specific_word(article_text, search_word)
-print("Number of times '" + search_word + "' appears:", specific_word_count)
+    specific_word_count = count_specific_word(
+        article_text,
+        search_word
+    )
 
-most_common_word = identify_most_common_word(article_text)
-print("Most common word:", most_common_word)
+    most_common_word = identify_most_common_word(article_text)
 
-average_word_length = calculate_average_word_length(article_text)
-print("Average word length:", round(average_word_length, 2))
+    average_word_length = calculate_average_word_length(
+        article_text
+    )
 
-paragraph_count = count_paragraphs(article_text)
-print("Number of paragraphs:", paragraph_count)
+    paragraph_count = count_paragraphs(article_text)
 
-sentence_count = count_sentences(article_text)
-print("sentense: analisys", sentence_count)
+    sentence_count = count_sentences(article_text)
+
+    print("Number of times '" + search_word + "' appears:",
+          specific_word_count)
+
+    print("Most common word:", most_common_word)
+
+    print("Average word length:",
+          round(average_word_length, 2))
+
+    print("Number of paragraphs:", paragraph_count)
+
+    print("Sentence analysis:", sentence_count)
+
+
+if __name__ == "__main__":
+    main()
+
 
