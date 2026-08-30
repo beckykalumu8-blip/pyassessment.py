@@ -39,67 +39,55 @@ The Apple Pie Master from ACME Inc. represents a significant advancement in the 
 """
 
 
-# Get individual words while ignoring punctuation and special characters.
-def get_words(text):
 
-    words = []
-    current_word = ""
-
-    for character in text:
-
-        if character.isalnum():
-            current_word += character.lower()
-
-        else:
-            if current_word != "":
-                words.append(current_word)
-                current_word = ""
-
-    # Make sure the final word is not lost.
-    if current_word != "":
-        words.append(current_word)
-
-    return words
-
-
-# 1. COUNT A SPECIFIC WORD
-
+# Count a specific word
 def count_specific_word(text, search_word):
 
-    words = get_words(text)
-    count = 0
+    words = text.lower().split()
 
-    search_word = search_word.lower()
+    count = 0
 
     for word in words:
 
-        if word == search_word:
+        # Remove punctuation from the word before comparing
+        clean_word = ""
+
+        for character in word:
+
+            if character.isalnum():
+                clean_word += character
+
+        if clean_word == search_word.lower():
             count += 1
 
     return count
 
 
-# 2. IDENTIFY MOST COMMON WORD
-
+# Identify the most common word
 def identify_most_common_word(text):
 
-    # The assignment requires None for an empty string.
     if text.strip() == "":
         return None
 
-    words = get_words(text)
-
-    if len(words) == 0:
-        return None
+    words = text.lower().split()
 
     word_counts = {}
 
     for word in words:
 
-        if word in word_counts:
-            word_counts[word] += 1
-        else:
-            word_counts[word] = 1
+        clean_word = ""
+
+        for character in word:
+
+            if character.isalnum():
+                clean_word += character
+
+        if clean_word != "":
+
+            if clean_word in word_counts:
+                word_counts[clean_word] += 1
+            else:
+                word_counts[clean_word] = 1
 
     most_common_word = None
     highest_count = 0
@@ -113,32 +101,39 @@ def identify_most_common_word(text):
     return most_common_word
 
 
-# 3. CALCULATE AVERAGE WORD LENGTH
-
+# Calculate average word length
 def calculate_average_word_length(text):
 
-    # The assignment requires 0 for an empty string.
     if text.strip() == "":
         return 0
 
-    words = get_words(text)
-
-    if len(words) == 0:
-        return 0
+    words = text.lower().split()
 
     total_length = 0
+    word_count = 0
 
     for word in words:
-        total_length += len(word)
 
-    return total_length / len(words)
+        clean_word = ""
+
+        for character in word:
+
+            if character.isalnum():
+                clean_word += character
+
+        if clean_word != "":
+            total_length += len(clean_word)
+            word_count += 1
+
+    if word_count == 0:
+        return 0
+
+    return total_length / word_count
 
 
-# 4. COUNT PARAGRAPHS
-
+# Count paragraphs
 def count_paragraphs(text):
 
-    # The assignment specifically requires 1 for an empty string.
     if text.strip() == "":
         return 1
 
@@ -151,7 +146,7 @@ def count_paragraphs(text):
 
         if line.strip() != "":
 
-            if inside_paragraph == False:
+            if not inside_paragraph:
                 paragraph_count += 1
                 inside_paragraph = True
 
@@ -161,11 +156,9 @@ def count_paragraphs(text):
     return paragraph_count
 
 
-# 5. COUNT SENTENCES
-
+# Count sentences
 def count_sentences(text):
 
-    # The assignment specifically requires 1 for an empty string.
     if text.strip() == "":
         return 1
 
@@ -174,37 +167,20 @@ def count_sentences(text):
 
     while index < len(text):
 
-        character = text[index]
-
         if (
-            character == "."
-            or character == "!"
-            or character == "?"
+            text[index] == "."
+            or text[index] == "!"
+            or text[index] == "?"
         ):
 
             sentence_count += 1
-
-            # Treat consecutive sentence punctuation as one ending.
-            while index + 1 < len(text):
-
-                next_character = text[index + 1]
-
-                if (
-                    next_character == "."
-                    or next_character == "!"
-                    or next_character == "?"
-                ):
-                    index += 1
-                else:
-                    break
 
         index += 1
 
     return sentence_count
 
 
-# RUN THE PROGRAM
-
+# Test the functions
 specific_word = "the"
 
 specific_word_count = count_specific_word(
@@ -229,8 +205,7 @@ sentences = count_sentences(
 )
 
 
-# DISPLAY RESULTS
-
+# Display results
 print(
     "Number of times",
     specific_word,
@@ -257,5 +232,6 @@ print(
     "sentence: analysis",
     sentences
 )
+
 
 
